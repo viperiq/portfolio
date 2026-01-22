@@ -1,43 +1,20 @@
 /* =====================
    CSS Variables
    ===================== */
-:root {
-    /* Base colors from website */
-    --primary: #3C32A3;
-    --primary-dark: #2e265f;
-    --primary-light: #5d4fc8;
-    --accent: #00E676;
-    --dark: #1a1a1a;
-    --light: #f8f8fa;
-    --white: #ffffff;
-
-    /* Backgrounds */
-    --color-bg: var(--light);
-    --color-bg-light: var(--primary-light);
-    --color-bg-dark: var(--primary-dark);
-
-    /* Text */
-    --color-text: #333333;
-    --color-text-light: #666666;
-    --color-muted: #4a4a4a;
-
-    /* Borders & shadows */
-    --color-border: var(--primary-light);
-    --shadow-main: var(--shadow-lg);
-    --shadow-card: var(--shadow-md), var(--shadow-sm);
-
-    /* Radius */
-    --radius-main: 18px;
-    --radius-btn: 12px;
-
-    /* Gradients */
-    --gradient-main: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
-    --gradient-brand: linear-gradient(90deg, var(--primary) 30%, var(--accent) 100%);
-
-    /* Font & transitions */
-    --font-main: "Quicksand", sans-serif;
-    --transition: all 0.3s ease;
-}
+:root { --color-bg: #383839; 
+  --color-bg-light: #2b2939; 
+  --color-bg-dark: #2e265f; 
+  --color-primary: #d8d7e0; 
+  --color-secondary: #6ee7b7; 
+  --color-accent: #5d4fc8; 
+  --color-text: #333333; 
+  --color-text-light: #666666;
+   --color-muted: #4a4a4a;
+    --color-border: #5d4fc8;
+     --shadow-main: 0 4px 24px #0008;
+      --shadow-card: 0 4px 24px #5ecbfa11,
+       0 1.5px 6px #0006; --radius-main: 18px; 
+       --radius-btn: 12px; --gradient-main: linear-gradient(90deg, var(--color-primary) 60%, var(--color-secondary) 100%); --gradient-brand: linear-gradient(90deg, var(--color-primary) 30%, var(--color-accent) 100%); }
 
 
 /* =====================
@@ -218,7 +195,7 @@ h2::after {
 }
 
 #welcomeimg img {
-  width: 160px;
+  width: 250px;
   height: auto;
   border-radius: 18px;
   object-fit: cover;
@@ -634,12 +611,12 @@ pre code {
    ===================== */
 @media (max-width: 1200px) {
   #home h1 { font-size: 2rem; }
-  #welcomeimg img { width: 140px; }
+  #welcomeimg img { width: 400px; }
 }
 
 @media (max-width: 900px) {
   #home h1 { font-size: 1.7rem; }
-  #welcomeimg img { width: 120px; }
+  #welcomeimg img { width: 250px; }
   #about .me { gap: 24px; }
   #about .me img {
     width: 90vw;
@@ -658,7 +635,7 @@ pre code {
   #home { padding: 40px 8vw; }
   #home h1 { font-size: 1.3rem; }
   #home p { font-size: 1rem; padding: 0 10px; }
-  #welcomeimg img { width: 100px; margin: 16px auto 0 auto; }
+  #welcomeimg img { width: 190px; margin: 16px auto 0 auto; }
   #about .me {
     flex-direction: column;
     gap: 18px;
@@ -680,7 +657,7 @@ pre code {
 @media (max-width: 480px) {
   #home { padding: 24px 2vw; }
   #home h1 { font-size: 1.05rem; }
-  #welcomeimg img { width: 70px; }
+  #welcomeimg img { width: 150px; }
   #about { padding: 36px 4vw; }
   #about .me p {
     font-size: 1rem;

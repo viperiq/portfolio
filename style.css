@@ -1,21 +1,24 @@
 /* =====================
    CSS Variables
    ===================== */
-:root { --color-bg: #383939; 
-  --color-bg-light: #44379c; 
-  --color-bg-dark: #2e265f; 
-  --color-primary: #8a7eeb; 
-  --color-secondary: #2e265f; 
-  --color-accent: #3525ae; 
-  --color-text: #333333; 
-  --color-text-light: #666666;
-  --color-muted: #4a4a4a;
-  --color-border: #20166c;
-  --shadow-main: 0 4px 24px rgba(0, 0, 0, 0.533);
-      --shadow-card: 0 4px 24px #5e68fa11,
-       0 1.5px 6px #0006; --radius-main: 18px; 
-       --radius-btn: 12px; --gradient-main: linear-gradient(90deg, var(--color-primary) 60%, var(--color-secondary) 100%); --gradient-brand: linear-gradient(90deg, var(--color-primary) 30%, var(--color-accent) 100%); }
-
+:root {
+  --color-bg: #23272a;
+  --color-bg-light: #1e2226;
+  --color-bg-dark: #181a1b;
+  --color-primary: #5ecbfa;
+  --color-secondary: #6ee7b7;
+  --color-accent: #2397ef;
+  --color-text: #e6e6e6;
+  --color-text-light: #f8fafc;
+  --color-muted: #b0b3b8;
+  --color-border: #31363b;
+  --shadow-main: 0 4px 24px #0008;
+  --shadow-card: 0 4px 24px #5ecbfa11, 0 1.5px 6px #0006;
+  --radius-main: 18px;
+  --radius-btn: 12px;
+  --gradient-main: linear-gradient(90deg, var(--color-primary) 60%, var(--color-secondary) 100%);
+  --gradient-brand: linear-gradient(90deg, var(--color-primary) 30%, var(--color-accent) 100%);
+}
 
 /* =====================
    Global Reset & Base
@@ -57,7 +60,7 @@ nav.navbar {
 .navbar-brand h1 {
   font-size: 2.1rem;
   letter-spacing: 2.5px;
-  color: #fbfdfe;
+  color: #f8fafc;
   text-shadow: 0 2px 12px #2397ef33, 0 1px 2px #000a;
   background: var(--gradient-brand);
   background-clip: text;
@@ -66,7 +69,7 @@ nav.navbar {
 }
 
 .navbar-brand span {
-  color: #01000b;
+  color: #6ee7b7;
   text-shadow: 0 2px 8px #6ee7b744;
 }
 
@@ -90,45 +93,26 @@ nav.navbar {
   color: var(--color-bg);
   background: var(--gradient-main);
   box-shadow: 0 2px 12px #2397ef33;
-  text-shadow: 0 2px 8px rgba(6, 26, 66, 0.533);
+  text-shadow: 0 2px 8px #fff8;
 }
 
 /* Navbar toggler for mobile */
 
-/* Navbar toggler button */
 .navbar-toggler {
   border: none;
-  background: transparent; /* transparent for gradient hover to show */
+  
+  background: #23272a00;
   border-radius: 8px;
   padding: 6px 10px;
   transition: background 0.2s;
 }
-
-/* Hover effect */
 .navbar-toggler:hover {
-  background: var(--gradient-main);
   outline: none;
-}
-
-/* Toggler icon using your CSS variable for color */
-.navbar-toggler-icon {
-  display: inline-block;
-  width: 30px;
-  height: 22px;
-  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='none' stroke='%235d4fc8' stroke-width='2'%3e%3cline x1='4' y1='7' x2='26' y2='7'/%3e%3cline x1='4' y1='15' x2='26' y2='15'/%3e%3cline x1='4' y1='23' x2='26' y2='23'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
-/* Example: using JS/CSS variable for dynamic color if needed */
-:root {
-  --toggler-color: #5d4fc8; /* change to any palette color */
+  background: var(--gradient-main);
 }
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='none' stroke='%235d4fc8' stroke-width='2'%3e%3cline x1='4' y1='7' x2='26' y2='7'/%3e%3cline x1='4' y1='15' x2='26' y2='15'/%3e%3cline x1='4' y1='23' x2='26' y2='23'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='none' stroke='white' stroke-width='2'%3e%3cline x1='4' y1='7' x2='26' y2='7'/%3e%3cline x1='4' y1='15' x2='26' y2='15'/%3e%3cline x1='4' y1='23' x2='26' y2='23'/%3e%3c/svg%3e");
 }
-
 
 /* =====================
    Section Headings
@@ -174,19 +158,31 @@ h2::after {
   padding: 70px 20px 50px 20px;
   min-height: 70vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 0;
   text-align: center;
   box-shadow: 0 6px 32px #0004;
+}
+
+#home > div:first-child,
+.home-text {
+  flex: 1 1 0;
+  min-width: 240px;
+  max-width: 600px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #home h1 {
   font-size: 2.3rem;
   font-weight: 800;
-  margin-bottom: 18px;
+  margin: 0 0 18px 0;
   color: #f1f3f4;
-  text-align: center;
   letter-spacing: 1.5px;
   text-shadow: 0 2px 8px #0003;
 }
@@ -199,7 +195,7 @@ h2::after {
 #home p {
   font-size: 1.18rem;
   max-width: 650px;
-  margin: 0 auto 28px;
+  margin: 0 auto 28px auto;
   color: #b0b3b8;
   text-align: center;
   line-height: 1.7;
@@ -207,14 +203,19 @@ h2::after {
 }
 
 #welcomeimg {
-  width: 100%;
+  flex: 0 0 auto;
   display: flex;
-  justify-content: center;
-  margin-top: 22px;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  min-width: 180px;
+  max-width: 320px;
 }
 
 #welcomeimg img {
-  width: 250px;
+  width: 220px;
+  max-width: 100%;
+  min-width: 120px;
   height: auto;
   border-radius: 18px;
   object-fit: cover;
@@ -231,13 +232,90 @@ h2::after {
   box-shadow: 0 12px 40px #5ecbfa33, 0 4px 16px #0008;
 }
 
-#home .d-flex {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-  text-align: center;
+/* Responsive Home Section */
+@media (max-width: 900px) {
+  #home {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 40px 8vw;
+    min-height: unset;
+    box-shadow: none;
+  }
+  #home > div:first-child,
+  .home-text {
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    flex: none;
+    display: block;
+  }
+  #welcomeimg {
+    justify-content: center;
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  #welcomeimg img {
+    width: 240px;
+    min-width: 80px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  #home {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 24px 2vw;
+    min-height: unset;
+    box-shadow: none;
+  }
+  #home > div:first-child,
+  .home-text {
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    flex: none;
+    display: block;
+  }
+  #home h1,
+  #home p {
+    margin: 0;
+    padding: 0;
+  }
+  #welcomeimg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  #welcomeimg img {
+    width: 180px;
+    min-width: 60px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  #home {
+    padding: 16px 1vw;
+  }
+  #home h1 {
+    font-size: 1.05rem;
+  }
+  #welcomeimg img {
+    width: 70px;
+  }
 }
 
 /* =====================
@@ -630,63 +708,25 @@ pre code {
    ===================== */
 @media (max-width: 1200px) {
   #home h1 { font-size: 2rem; }
-  #welcomeimg img { width: 400px; }
+  #welcomeimg img { width: 240px; }
 }
 
 @media (max-width: 900px) {
   #home h1 { font-size: 1.7rem; }
-  #welcomeimg img { width: 250px; }
-  #about .me { gap: 24px; }
-  #about .me img {
-    width: 90vw;
-    max-width: 340px;
-    height: auto;
-    margin: 0 auto;
-  }
-  #about .me p {
-    max-width: 95vw;
-    padding: 22px 12px 18px 12px;
-    margin: 0 auto;
-  }
+  #welcomeimg img { width: 180px; }
 }
 
 @media (max-width: 768px) {
   #home { padding: 40px 8vw; }
   #home h1 { font-size: 1.3rem; }
   #home p { font-size: 1rem; padding: 0 10px; }
-  #welcomeimg img { width: 190px; margin: 16px auto 0 auto; }
-  #about .me {
-    flex-direction: column;
-    gap: 18px;
-    align-items: center;
-    text-align: center;
-  }
-  #about .me p {
-    width: 100%;
-    margin: 0 10px;
-  }
-  #about .me img {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    margin: 0 auto;
-  }
+  #welcomeimg img { width: 100px; margin: 16px auto 0 auto; }
 }
 
 @media (max-width: 480px) {
   #home { padding: 24px 2vw; }
   #home h1 { font-size: 1.05rem; }
-  #welcomeimg img { width: 150px; }
-  #about { padding: 36px 4vw; }
-  #about .me p {
-    font-size: 1rem;
-    padding: 14px 6px 12px 6px;
-    margin: 0 auto;
-  }
-  #about .me img {
-    max-width: 98vw;
-    margin: 0 auto;
-  }
+  #welcomeimg img { width: 70px; }
 }
 
 /* =====================
@@ -745,8 +785,3 @@ pre code {
   border-radius: 16px;
   overflow: hidden;
 }
-
-
-
-
-

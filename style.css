@@ -1,12 +1,12 @@
 /* =====================
    CSS Variables
    ===================== */
-:root { --color-bg: #383839; 
-  --color-bg-light: #2b2939; 
+:root { --color-bg: #383939; 
+  --color-bg-light: #5f4ecf; 
   --color-bg-dark: #2e265f; 
   --color-primary: #d8d7e0; 
-  --color-secondary: #6ee7b7; 
-  --color-accent: #5d4fc8; 
+  --color-secondary: #2e265f; 
+  --color-accent: #3525ae; 
   --color-text: #333333; 
   --color-text-light: #666666;
    --color-muted: #4a4a4a;
@@ -57,7 +57,7 @@ nav.navbar {
 .navbar-brand h1 {
   font-size: 2.1rem;
   letter-spacing: 2.5px;
-  color: #f8fafc;
+  color: #fbfdfe;
   text-shadow: 0 2px 12px #2397ef33, 0 1px 2px #000a;
   background: var(--gradient-brand);
   background-clip: text;
@@ -66,7 +66,7 @@ nav.navbar {
 }
 
 .navbar-brand span {
-  color: #6ee7b7;
+  color: #2e265f;
   text-shadow: 0 2px 8px #6ee7b744;
 }
 
@@ -90,7 +90,7 @@ nav.navbar {
   color: var(--color-bg);
   background: var(--gradient-main);
   box-shadow: 0 2px 12px #2397ef33;
-  text-shadow: 0 2px 8px #fff8;
+  text-shadow: 0 2px 8px rgba(6, 26, 66, 0.533);
 }
 
 /* Navbar toggler for mobile */

@@ -2,16 +2,16 @@
    CSS Variables
    ===================== */
 :root {
-  --color-bg: #23272a;
-  --color-bg-light: #1e2226;
-  --color-bg-dark: #181a1b;
-  --color-primary: #5ecbfa;
+  --color-bg: #f8f8fa;
+  --color-bg-light: #5d4fc8;
+  --color-bg-dark: #2e265f;
+  --color-primary: #5d4fc8;
   --color-secondary: #6ee7b7;
-  --color-accent: #2397ef;
-  --color-text: #e6e6e6;
-  --color-text-light: #f8fafc;
-  --color-muted: #b0b3b8;
-  --color-border: #31363b;
+  --color-accent: #5d4fc8;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-muted: #4a4a4a;
+  --color-border: #5d4fc8;
   --shadow-main: 0 4px 24px #0008;
   --shadow-card: 0 4px 24px #5ecbfa11, 0 1.5px 6px #0006;
   --radius-main: 18px;
@@ -785,3 +785,4 @@ pre code {
   border-radius: 16px;
   overflow: hidden;
 }
+

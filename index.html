@@ -1,132 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mustafa Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MMK | Master's Student & Developer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
-        rel="stylesheet" 
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
-        crossorigin="anonymous">
+    <style>
+        :root {
+            --bg: #05080a;
+            --text-main: #e0e0e0;
+            --text-muted: #94a3b8;
+            --accent-cyan: #00f3ff;
+            --accent-blue: #2563eb;
+            --glass: rgba(10, 15, 20, 0.7);
+            --border: rgba(255, 255, 255, 0.08);
+            --easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
-          crossorigin="anonymous"></script>
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+            background: radial-gradient(circle at center, #0a101f 0%, #000000 100%);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; text-transform: uppercase; margin: 0; letter-spacing: 1px; }
+        
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 0;
+            width: 60px; height: 4px;
+            background: var(--accent-cyan);
+            border-radius: 2px;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+        nav.scrolled { background: rgba(5, 8, 10, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+
+        .logo { font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; color: white; text-decoration: none; letter-spacing: 1px; }
+        
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-cyan); }
+
+        /* Mobile Menu */
+        .hamburger { display: none; font-size: 1.5rem; color: white; cursor: pointer; }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 100px 5vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        #hero { alignItems: flex-start; justify-content: center; height: 100vh; pointer-events: none; }
+        .hero-content { pointer-events: auto; z-index: 2; max-width: 900px; }
+        .hero-subtitle { font-size: 0.9rem; color: var(--accent-cyan); letter-spacing: 3px; margin-bottom: 1.5rem; display: block; font-weight: 600; font-family: 'Outfit'; }
+        .hero-title { font-size: clamp(3rem, 8vw, 6rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; }
+        .hero-desc { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; line-height: 1.7; margin-bottom: 2.5rem; }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            color: white;
+            text-decoration: none;
+            font-family: 'Outfit';
+            font-weight: 700;
+            border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.2);
+        }
+        .btn-outline {
+            display: inline-block;
+            padding: 14px 35px;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-family: 'Outfit';
+            font-weight: 700;
+            border-radius: 4px;
+            transition: 0.3s;
+            background: transparent;
+            cursor: pointer;
+        }
+        .btn-outline:hover { background: rgba(0, 243, 255, 0.1); }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--easing); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Grid & Cards */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-blue));
+        }
+
+        /* Timeline */
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 40px; border-left: 2px solid rgba(255,255,255,0.05); }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan); }
+        .timeline-date { font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 5px; display: block; font-weight: 600; }
+        .timeline-role { font-size: 1.25rem; color: white; font-weight: 700; margin-bottom: 5px; font-family: 'Outfit'; }
+        .timeline-company { font-size: 1rem; color: var(--text-muted); margin-bottom: 15px; }
+
+        /* Tech Stack */
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .tech-pill { padding: 8px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text-muted); transition: 0.3s; }
+        .tech-pill:hover { border-color: var(--accent-cyan); color: white; background: rgba(0, 243, 255, 0.1); }
+
+        /* Projects */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; }
+        .project-card {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 35px; border-radius: 12px;
+            transition: 0.3s var(--easing); position: relative; text-decoration: none; display: flex; flex-direction: column;
+            justify-content: space-between; min-height: 260px;
+        }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent-cyan); background: rgba(0, 243, 255, 0.02); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
+        .folder-icon { font-size: 2rem; color: var(--accent-cyan); }
+        .external-icon { font-size: 1.2rem; color: var(--text-muted); transition: 0.2s;}
+        .project-card:hover .external-icon { color: white; }
+        .project-title { font-size: 1.35rem; color: white; font-weight: 700; margin-bottom: 12px; font-family: 'Outfit'; }
+        .project-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* Contact */
+        .contact-wrapper { max-width: 600px; width: 100%; margin: 0 auto; text-align: center; }
+        .social-row { display: flex; justify-content: center; gap: 25px; margin: 40px 0; }
+        .social-icon { font-size: 1.5rem; color: var(--text-muted); width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: 0.3s; text-decoration: none; }
+        .social-icon:hover { color: white; border-color: var(--accent-cyan); background: rgba(0,243,255,0.1); }
+
+        /* Loader */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #05080a; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease-out; }
+        .loader-text { font-family: 'Outfit'; font-size: 1.5rem; letter-spacing: 3px; font-weight: 700; color: white; margin-bottom: 20px; }
+        .loader-spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent-cyan); border-radius: 50%; animation: spin 1s linear infinite; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 20px; }
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute;
+                top: 70px; left: 0; width: 100%;
+                background: rgba(5, 8, 10, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 0;
+                gap: 30px;
+                border-bottom: 1px solid var(--border);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .nav-links.active { transform: translateY(0); }
+            
+            .grid-2 { grid-template-columns: 1fr; gap: 30px; }
+            .section-title { font-size: 2.2rem; }
+            #hero { padding-top: 100px; height: auto; min-height: 100vh; }
+            .hero-content { margin-top: 15vh; }
+        }
+
+        @keyframes spin { to {transform: rotate(360deg);} }
+    </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<section>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <h1 class="fw-bolder">MM<span style="color: rgb(35, 151, 239);">K</span></h1>
-      </a>
-      <button  class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-              data-bs-target="#navbarNavAltMarkup" 
-              aria-controls="navbarNavAltMarkup" aria-expanded="false" 
-              aria-label="Toggle navigation">
-     
-    <span style="color: white; font-size: 24px;">☰</span> 
-
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link" href="#home">Home</a>
-          <a class="nav-link" href="#about">About Me</a>
-          <a class="nav-link" href="project-link.html">Projects</a>
-          <a class="nav-link" href="#contact">Contact</a>
-        </div>
-      </div>
+    <div id="loader">
+        <div class="loader-text">INITIALIZING...</div>
+        <div class="loader-spinner"></div>
     </div>
-  </nav>
-</section>
 
-<!-- Home Section -->
-<section id="home" class="d-flex justify-content-around align-items-center">
-  <div>
-    <h1>Welcome to <span style="color: #6451f1;">Mustafa's</span> Portfolio</h1>
-    <p>In this website, I publish all my projects and share the things I do in life.</p>
-  </div>
-  <div id="welcomeimg">
-    <img src="photo_2024-02-09_19-34-48.jpg" alt="My photo">
-  </div>
-</section>
+    <div id="canvas-container"></div>
 
-<!-- About Me Section -->
-<section id="about">
-  <h2><span style="color: #6451f1;">About Me</span></h2>
-  <div class="me">
-    <p>I am a passionate programmer with a solid background in IT and communication concepts. 
-       I have explored fields like web development, AI, computer applications, and game development, 
-       always eager to expand my knowledge.</p>
-    <img src="photo_2026-01-22_22-40-43.jpg" alt="">
-  </div>
-  <div class="me">
-    <p>I approach challenges with humility and a desire for growth. Staying updated with the latest 
-       technologies helps me develop innovative solutions and maintain my status as a top student.</p>
-    <img src="photo_2026-01-22_21-48-37.jpg" alt="">
-  </div>
-  <div class="me">
-    <p>Curiosity drives me to explore new things and contribute meaningfully to every project. 
-       Each experience strengthens my skills and helps me grow as both a programmer and problem-solver.</p>
-    <img src="off-road-car-wilderness.jpg" alt="">
-  </div>
-</section>
+    <nav id="navbar">
+        <a href="#" class="logo">MM<span style="color:var(--accent-cyan)">K</span></a>
+        
+        <div class="hamburger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
 
-<!-- Projects Section -->
-<section id="projects" class="container my-5">
-  <h2 class="mb-4">My GitHub Projects</h2>
-  <ul id="repo-list" class="list-group"></ul>
-</section>
+        <div class="nav-links">
+            <a href="#about" class="nav-link" onclick="toggleMenu()">About</a>
+            <a href="#experience" class="nav-link" onclick="toggleMenu()">Experience</a>
+            <a href="#projects" class="nav-link" onclick="toggleMenu()">Work</a>
+            <a href="#contact" class="nav-link" onclick="toggleMenu()">Contact</a>
+        </div>
+    </nav>
 
-<!-- Contact Section -->
-<section id="contact">
-  <h2>Contact Me</h2>
-  <div class="socialm">
-    <a href="https://github.com/viperiq">
-      <img src="github.png" alt="GitHub">
-    </a>
-    <a href="https://www.linkedin.com/in/mmk-viperiq">
-      <img src="linkedin.png" alt="LinkedIn">
-    </a>
-    <a href="https://www.instagram.com/mm_k43">
-      <img src="instagram.png" alt="Instagram">
-    </a>
-  </div>
-  <div class="map">
-    <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d213393.7176972021!2d44.19109522306571!3d33.311577260554316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15577f67a0a74193%3A0x9deda9d2a3b16f2c!2sBaghdad%2C%20Baghdad%20Governorate!5e0!3m2!1sen!2siq!4v1730234373485!5m2!1sen!2siq" 
-            width="400" height="300" style="border:0;" allowfullscreen="" 
-            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-</section>
+    <section id="hero" data-shape-index="0">
+        <div class="hero-content reveal active">
+            <span class="hero-subtitle">MASTER'S STUDENT & DEVELOPER</span>
+            <h1 class="hero-title">MUSTAFA<br><span class="gradient-text">MAHMOUD</span></h1>
+            <p class="hero-desc">
+                Full Stack Developer and Media Technology Engineer based in Baghdad. 
+                I create intelligent systems, immersive games, and robust web applications.
+            </p>
+            <div>
+                <a href="#contact" class="btn-primary">Start Collaboration</a>
+            </div>
+        </div>
+    </section>
 
-<!-- GitHub Repo Script -->
-<script>
-  const username = 'viperiq';
-  fetch(`https://api.github.com/users/${username}/repos`)
-    .then(response => response.json())
-    .then(repos => {
-      const list = document.getElementById('repo-list');
-      repos.forEach(repo => {
-        const item = document.createElement('li');
-        item.classList.add('list-group-item');
-        item.innerHTML = `<a href="${repo.html_url}" target="_blank" class="fw-bold">${repo.name}</a><br><small>${repo.description || 'No description available.'}</small>`;
-        list.appendChild(item);
-      });
-    })
-    .catch(error => console.error('Error fetching repos:', error));
-</script>
+    <section id="about" data-shape-index="1">
+        <h2 class="section-title reveal">01. PROFILE</h2>
+        <div class="grid-2">
+            <div class="glass-card reveal">
+                <h3 style="margin-bottom: 20px; font-weight:700;">About Me</h3>
+                <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 20px;">
+                    I am a Bachelor's graduate in <strong>Media Technology & Communication Engineering</strong> (UOITC, 2024) and currently pursuing my <strong>Master's degree</strong>.
+                </p>
+                <p style="color: var(--text-muted); line-height: 1.7;">
+                    My journey spans diverse fields—from developing AI Chatbots with TensorFlow to building 2D games in Java. I pride myself on critical thinking and solving complex problems.
+                </p>
+            </div>
+            
+            <div class="reveal">
+                <div class="glass-card" style="border-left: none; border-top: 4px solid var(--accent-cyan);">
+                    <h3 style="margin-bottom: 20px; font-weight:700;">Technical Arsenal</h3>
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="font-size: 0.85rem; color:white; margin-bottom:10px; font-weight:600; opacity:0.9;">LANGUAGES & CORE</h4>
+                        <div class="tech-stack">
+                            <span class="tech-pill">Python</span>
+                            <span class="tech-pill">JavaScript</span>
+                            <span class="tech-pill">PHP</span>
+                            <span class="tech-pill">Java</span>
+                            <span class="tech-pill">C#</span>
+                            <span class="tech-pill">HTML/CSS</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.85rem; color:white; margin-bottom:10px; font-weight:600; opacity:0.9;">SPECIALIZED TECH</h4>
+                        <div class="tech-stack">
+                            <span class="tech-pill">TensorFlow (AI)</span>
+                            <span class="tech-pill">Godot Engine</span>
+                            <span class="tech-pill">Three.js</span>
+                            <span class="tech-pill">Flask</span>
+                            <span class="tech-pill">Arduino/IoT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="experience" data-shape-index="2">
+        <h2 class="section-title reveal">02. CAREER</h2>
+        <div class="glass-card reveal" style="max-width: 900px; width: 100%;">
+            <div class="timeline-item">
+                <span class="timeline-date">JUNE 2024 - SEP 2024</span>
+                <div class="timeline-role">Manager & Web Trainer</div>
+                <div class="timeline-company">Fiber Iraq Academy</div>
+                <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                    • Delivered structured Full Stack Development training curricula.<br>
+                    • Developed interactive Android & Windows display applications.<br>
+                    • Programmed KNX smart automation devices and managed international supplier communications.
+                </p>
+            </div>
+            <div class="timeline-item" style="border-left-color: rgba(255,255,255,0.05); margin-bottom: 0;">
+                <span class="timeline-date">2020 - 2024</span>
+                <div class="timeline-role">Communication Engineering Student</div>
+                <div class="timeline-company">UOITC University</div>
+                <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                    • Graduated with a Bachelor of Media Technology & Communication Engineering.<br>
+                    • Developed "Conference System" (Top Graduation Project).
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" data-shape-index="3">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; width: 100%; margin-bottom: 3rem;">
+            <h2 class="section-title reveal" style="margin-bottom: 0;">03. PROJECTS</h2>
+            <!-- Link to new Projects Page -->
+            <a href="projects.html" class="btn-outline reveal">View Full Archive</a>
+        </div>
+        
+        <div class="projects-grid" id="repo-grid">
+            <!-- Static featured projects for fallback -->
+            <a href="#" class="project-card">
+                <div class="project-top">
+                    <i class="fas fa-microchip folder-icon"></i>
+                </div>
+                <div>
+                    <div class="project-title">AI Chatbot</div>
+                    <div class="project-desc">Real-time seq2seq chatbot built with Python, TensorFlow, and Flask.</div>
+                </div>
+            </a>
+            <a href="#" class="project-card">
+                <div class="project-top">
+                    <i class="fas fa-desktop folder-icon"></i>
+                </div>
+                <div>
+                    <div class="project-title">Conference System</div>
+                    <div class="project-desc">Top 2024 Graduation Project. Full stack PHP & MySQL solution.</div>
+                </div>
+            </a>
+            <a href="#" class="project-card">
+                <div class="project-top">
+                    <i class="fas fa-gamepad folder-icon"></i>
+                </div>
+                <div>
+                    <div class="project-title">Lava Bird</div>
+                    <div class="project-desc">2D Game developed in Java featuring custom physics and collision detection.</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="contact" data-shape-index="4">
+        <div class="contact-wrapper reveal">
+            <span class="hero-subtitle">BAGHDAD, IRAQ</span>
+            <h2 class="section-title">CONNECT</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.6;">
+                Open for research collaborations, development projects, or technical consultancy.
+            </p>
+            <a href="mailto:mustafa.mmkf@gmail.com" class="btn-primary" style="background: transparent; border: 1px solid var(--accent-cyan); color: var(--accent-cyan);">
+                SEND EMAIL
+            </a>
+            <div class="social-row">
+                <a href="https://github.com/viperiq" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/mmk-viperiq" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/mm_k43" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div style="margin-top: 50px; border-radius:12px; overflow:hidden; border: 1px solid var(--border); opacity: 0.8; invert(0.9);">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d213393.7176972021!2d44.19109522306571!3d33.311577260554316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15577f67a0a74193%3A0x9deda9d2a3b16f2c!2sBaghdad%2C%20Baghdad%20Governorate!5e0!3m2!1sen!2siq!4v1730234373485!5m2!1sen!2siq" 
+                width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; font-size: 0.85rem; color: #666; font-weight: 500;">
+        MUSTAFA MAHMOUD KAREEM &copy;
+    </footer>
+
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+        // --- UI Logic ---
+        const loader = document.getElementById('loader');
+        window.toggleMenu = function() {
+            const nav = document.querySelector('.nav-links');
+            nav.classList.toggle('active');
+        }
+
+        const username = 'viperiq';
+        // Only fetching top 3 for home page
+        fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
+            .then(res => res.json())
+            .then(data => {
+                const grid = document.getElementById('repo-grid');
+                if(!grid || !data.length) return;
+                grid.innerHTML = '';
+                data.slice(0, 3).forEach(repo => {
+                    const card = document.createElement('a');
+                    card.href = repo.html_url;
+                    card.target = "_blank";
+                    card.className = 'project-card';
+                    card.innerHTML = `
+                        <div class="project-top">
+                            <i class="far fa-folder folder-icon"></i>
+                            <i class="fas fa-external-link-alt external-icon"></i>
+                        </div>
+                        <div>
+                            <div class="project-title">${repo.name}</div>
+                            <div class="project-desc">${repo.description || 'View on GitHub.'}</div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }).catch(e => console.log('Git fetch failed', e));
+
+        // --- 3D Particle Logic ---
+        const CONFIG = {
+            particleSize: 0.20, // Reduced from 0.35 to 0.20 for finer look
+            color1: new THREE.Color(0x00f3ff), color2: new THREE.Color(0x2563eb),
+            repelRadius: 40, repelStrength: 50, returnSpeed: 0.08, morphSpeed: 0.04
+        };
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x05080a, 0.003);
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 100;
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        let particles, shapes = [], currentShapeIndex = 0;
+        const mouse = new THREE.Vector2(-999, -999);
+        const raycaster = new THREE.Raycaster();
+        const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+        const mousePos3D = new THREE.Vector3();
+
+        function getPointsFromVisual(type, content) {
+            const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+            const w = 400; const h = 300; canvas.width = w; canvas.height = h;
+            ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h); ctx.fillStyle = '#fff';
+            if (type === 'text') {
+                ctx.font = '900 100px "Outfit", sans-serif'; 
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(content, w/2, h/2);
+            } else if (type === 'icon') {
+                ctx.font = '900 130px "Font Awesome 6 Free"'; 
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(content, w/2, h/2);
+            }
+            const data = ctx.getImageData(0,0,w,h).data; const points = [];
+            const step = window.innerWidth < 768 ? 3 : 2;
+            for(let y=0; y<h; y+=step) { for(let x=0; x<w; x+=step) {
+                if(data[(y*w+x)*4] > 128) { points.push({ x: (x - w/2) * 0.8, y: -(y - h/2) * 0.8, z: 0, uv: x/w }); }
+            }}
+            return points;
+        }
+
+        async function initSystem() {
+            await document.fonts.ready;
+            const shape0 = getPointsFromVisual('text', 'MMK');
+            const shape1 = getPointsFromVisual('icon', '\uf007'); 
+            const shape2 = getPointsFromVisual('icon', '\uf0b1');
+            const shape3 = getPointsFromVisual('icon', '\uf109');
+            const shape4 = getPointsFromVisual('icon', '\uf0e0');
+            const rawShapes = [shape0, shape1, shape2, shape3, shape4];
+
+            let maxCount = 0; rawShapes.forEach(s => { if(s.length > maxCount) maxCount = s.length; });
+            shapes = rawShapes.map(s => {
+                const arr = new Float32Array(maxCount * 3);
+                for(let i=0; i<maxCount; i++) { const p = s[i % s.length]; arr[i*3] = p.x; arr[i*3+1] = p.y; arr[i*3+2] = p.z; }
+                return arr;
+            });
+
+            const geo = new THREE.BufferGeometry();
+            const pos = new Float32Array(maxCount * 3); const colors = new Float32Array(maxCount * 3); const rand = new Float32Array(maxCount);
+            const c1 = CONFIG.color1; const c2 = CONFIG.color2; const tempC = new THREE.Color();
+
+            for(let i=0; i<maxCount; i++) {
+                const i3 = i*3;
+                pos[i3] = (Math.random()-0.5)*500; pos[i3+1] = (Math.random()-0.5)*500; pos[i3+2] = (Math.random()-0.5)*500;
+                tempC.copy(c1).lerp(c2, i/maxCount);
+                colors[i3] = tempC.r; colors[i3+1] = tempC.g; colors[i3+2] = tempC.b;
+                rand[i] = Math.random();
+            }
+
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geo.setAttribute('aRandom', new THREE.BufferAttribute(rand, 1));
+
+            particles = new THREE.Points(geo, new THREE.PointsMaterial({ size: CONFIG.particleSize, vertexColors: true, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending }));
+            
+            // Scaled down to 0.85 on desktop to keep shape size reasonable
+            const s = window.innerWidth < 768 ? 0.35 : 0.85; 
+            particles.scale.set(s,s,s);
+            scene.add(particles);
+
+            setTimeout(() => { loader.style.opacity = '0'; document.getElementById('canvas-container').style.opacity = '1'; setTimeout(() => loader.remove(), 800); }, 500);
+        }
+
+        initSystem();
+
+        window.addEventListener('mousemove', (e) => { mouse.x = (e.clientX / window.innerWidth) * 2 - 1; mouse.y = -(e.clientY / window.innerHeight) * 2 + 1; });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length > 0) { mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1; mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1; } }, {passive: true});
+        window.addEventListener('resize', () => { 
+            camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); 
+            if(particles) { 
+                const s = window.innerWidth < 768 ? 0.35 : 0.85; 
+                particles.scale.set(s,s,s); 
+            } 
+        });
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const index = parseInt(entry.target.getAttribute('data-shape-index'));
+                    if(!isNaN(index)) currentShapeIndex = index;
+                }
+            });
+        }, { threshold: 0.25 });
+        document.querySelectorAll('section').forEach(s => sectionObserver.observe(s));
+        
+        const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+            if(particles && shapes.length > 0) {
+                const pos = particles.geometry.attributes.position.array;
+                const rand = particles.geometry.attributes.aRandom.array;
+                const targetShape = shapes[currentShapeIndex];
+                raycaster.setFromCamera(mouse, camera); raycaster.ray.intersectPlane(plane, mousePos3D);
+                const scale = particles.scale.x; const localMouseX = mousePos3D.x / scale; const localMouseY = mousePos3D.y / scale;
+
+                for(let i=0; i<pos.length/3; i++) {
+                    const i3 = i*3;
+                    let x = pos[i3]; let y = pos[i3+1]; let z = pos[i3+2];
+                    const tx = targetShape[i3]; const ty = targetShape[i3+1]; const tz = targetShape[i3+2];
+                    const dx = tx - x; const dy = ty - y; const dz = tz - z;
+                    let vx = dx * CONFIG.returnSpeed; let vy = dy * CONFIG.returnSpeed; let vz = dz * CONFIG.returnSpeed;
+                    vx += Math.sin(time * 0.5 + rand[i] * 10) * 0.05; vy += Math.cos(time * 0.3 + rand[i] * 10) * 0.05;
+                    const distSq = (x - localMouseX)**2 + (y - localMouseY)**2;
+                    if(distSq < CONFIG.repelRadius**2) {
+                        const dist = Math.sqrt(distSq); const force = (CONFIG.repelRadius - dist) / CONFIG.repelRadius; const angle = Math.atan2(y - localMouseY, x - localMouseX);
+                        vx -= Math.cos(angle) * force * CONFIG.repelStrength * 0.5; vy -= Math.sin(angle) * force * CONFIG.repelStrength * 0.5;
+                    }
+                    pos[i3] += vx; pos[i3+1] += vy; pos[i3+2] += vz;
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                particles.rotation.y = Math.sin(time * 0.1) * 0.05; particles.rotation.x = Math.cos(time * 0.15) * 0.05;
+            }
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
 </body>
 </html>

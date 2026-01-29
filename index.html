@@ -109,11 +109,48 @@
             position: relative;
         }
 
-        #hero { alignItems: flex-start; justify-content: center; height: 100vh; pointer-events: none; }
-        .hero-content { pointer-events: auto; z-index: 2; max-width: 900px; }
+        /* HERO Styles - Updated for Photo */
+        #hero { 
+            justify-content: center; 
+            height: 100vh; 
+            pointer-events: none;
+        }
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            pointer-events: auto;
+            gap: 40px;
+        }
+        .hero-content { z-index: 2; max-width: 700px; }
         .hero-subtitle { font-size: 0.9rem; color: var(--accent-cyan); letter-spacing: 3px; margin-bottom: 1.5rem; display: block; font-weight: 600; font-family: 'Outfit'; }
-        .hero-title { font-size: clamp(3rem, 8vw, 6rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; }
+        .hero-title { font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800; }
         .hero-desc { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; line-height: 1.7; margin-bottom: 2.5rem; }
+
+        /* PHOTO 1: Hero Profile Pic */
+        .hero-image-box {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-cyan);
+            padding: 10px; /* Gap between image and border */
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+            animation: float 6s ease-in-out infinite;
+        }
+        .hero-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: grayscale(20%);
+            transition: 0.5s;
+        }
+        .hero-image-box:hover img { filter: grayscale(0%); }
 
         .btn-primary {
             display: inline-block;
@@ -149,9 +186,10 @@
         /* Animations */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--easing); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        @keyframes float { 0% {transform: translateY(0px);} 50% {transform: translateY(-20px);} 100% {transform: translateY(0px);} }
 
         /* Grid & Cards */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
         
         .glass-card {
             background: var(--glass);
@@ -162,6 +200,7 @@
             overflow: hidden;
             margin-bottom: 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            height: 100%;
         }
         .glass-card::before {
             content: '';
@@ -169,6 +208,24 @@
             top: 0; left: 0; width: 4px; height: 100%;
             background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-blue));
         }
+
+        /* PHOTO 2 & 3: Photo Cards */
+        .photo-card {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .photo-card:hover img { transform: scale(1.05); }
 
         /* Timeline */
         .timeline-item { position: relative; padding-left: 30px; margin-bottom: 40px; border-left: 2px solid rgba(255,255,255,0.05); }
@@ -226,10 +283,12 @@
             }
             .nav-links.active { transform: translateY(0); }
             
+            .hero-container { flex-direction: column-reverse; text-align: center; }
+            .hero-image-box { width: 250px; height: 250px; margin-bottom: 20px; }
+            .hero-content { align-items: center; }
             .grid-2 { grid-template-columns: 1fr; gap: 30px; }
             .section-title { font-size: 2.2rem; }
-            #hero { padding-top: 100px; height: auto; min-height: 100vh; }
-            .hero-content { margin-top: 15vh; }
+            #hero { padding-top: 120px; height: auto; min-height: 100vh; }
         }
 
         @keyframes spin { to {transform: rotate(360deg);} }
@@ -259,55 +318,75 @@
         </div>
     </nav>
 
+    <!-- PHOTO 1: Hero Profile Picture -->
     <section id="hero" data-shape-index="0">
-        <div class="hero-content reveal active">
-            <span class="hero-subtitle">MASTER'S STUDENT & DEVELOPER</span>
-            <h1 class="hero-title">MUSTAFA<br><span class="gradient-text">MAHMOUD</span></h1>
-            <p class="hero-desc">
-                Full Stack Developer and Media Technology Engineer based in Baghdad. 
-                I create intelligent systems, immersive games, and robust web applications.
-            </p>
-            <div>
-                <a href="#contact" class="btn-primary">Start Collaboration</a>
+        <div class="hero-container">
+            <div class="hero-content reveal active">
+                <span class="hero-subtitle">MASTER'S STUDENT & DEVELOPER</span>
+                <h1 class="hero-title">MUSTAFA<br><span class="gradient-text">MAHMOUD</span></h1>
+                <p class="hero-desc">
+                    Full Stack Developer and Media Technology Engineer based in Baghdad. 
+                    I create intelligent systems, immersive games, and robust web applications.
+                </p>
+                <div>
+                    <a href="#contact" class="btn-primary">Start Collaboration</a>
+                </div>
+            </div>
+            
+            <div class="hero-image-box reveal active">
+                <!-- Replace src with your profile picture -->
+                <img src="photo_2024-10-29_22-19-45.jpg" alt="Mustafa Mahmoud">
             </div>
         </div>
     </section>
 
+    <!-- PHOTO 2: About Me Photo -->
     <section id="about" data-shape-index="1">
         <h2 class="section-title reveal">01. PROFILE</h2>
         <div class="grid-2">
-            <div class="glass-card reveal">
-                <h3 style="margin-bottom: 20px; font-weight:700;">About Me</h3>
-                <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 20px;">
-                    I am a Bachelor's graduate in <strong>Media Technology & Communication Engineering</strong> (UOITC, 2024) and currently pursuing my <strong>Master's degree</strong>.
-                </p>
-                <p style="color: var(--text-muted); line-height: 1.7;">
-                    My journey spans diverse fields—from developing AI Chatbots with TensorFlow to building 2D games in Java. I pride myself on critical thinking and solving complex problems.
-                </p>
-            </div>
-            
+            <!-- Left Column: Photo -->
             <div class="reveal">
-                <div class="glass-card" style="border-left: none; border-top: 4px solid var(--accent-cyan);">
-                    <h3 style="margin-bottom: 20px; font-weight:700;">Technical Arsenal</h3>
-                    <div style="margin-bottom: 25px;">
-                        <h4 style="font-size: 0.85rem; color:white; margin-bottom:10px; font-weight:600; opacity:0.9;">LANGUAGES & CORE</h4>
-                        <div class="tech-stack">
-                            <span class="tech-pill">Python</span>
-                            <span class="tech-pill">JavaScript</span>
-                            <span class="tech-pill">PHP</span>
-                            <span class="tech-pill">Java</span>
-                            <span class="tech-pill">C#</span>
-                            <span class="tech-pill">HTML/CSS</span>
+                <div class="photo-card">
+                    <!-- Replace src with your personal photo (e.g., casual/working) -->
+                    <img src="photo_2026-01-22_22-40-43.jpg" alt="Mustafa Working">
+                </div>
+            </div>
+
+            <!-- Right Column: Info -->
+            <div style="display: flex; flex-direction: column; gap: 30px;">
+                <div class="glass-card reveal">
+                    <h3 style="margin-bottom: 20px; font-weight:700;">About Me</h3>
+                    <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 20px;">
+                        I am a Bachelor's graduate in <strong>Media Technology & Communication Engineering</strong> (UOITC, 2024) and currently pursuing my <strong>Master's degree</strong>.
+                    </p>
+                    <p style="color: var(--text-muted); line-height: 1.7;">
+                        My journey spans diverse fields—from developing AI Chatbots with TensorFlow to building 2D games in Java. I pride myself on critical thinking and solving complex problems.
+                    </p>
+                </div>
+                
+                <div class="reveal">
+                    <div class="glass-card" style="border-left: none; border-top: 4px solid var(--accent-cyan); margin-bottom: 0;">
+                        <h3 style="margin-bottom: 20px; font-weight:700;">Technical Arsenal</h3>
+                        <div style="margin-bottom: 25px;">
+                            <h4 style="font-size: 0.85rem; color:white; margin-bottom:10px; font-weight:600; opacity:0.9;">LANGUAGES & CORE</h4>
+                            <div class="tech-stack">
+                                <span class="tech-pill">Python</span>
+                                <span class="tech-pill">JavaScript</span>
+                                <span class="tech-pill">PHP</span>
+                                <span class="tech-pill">Java</span>
+                                <span class="tech-pill">C#</span>
+                                <span class="tech-pill">HTML/CSS</span>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <h4 style="font-size: 0.85rem; color:white; margin-bottom:10px; font-weight:600; opacity:0.9;">SPECIALIZED TECH</h4>
-                        <div class="tech-stack">
-                            <span class="tech-pill">TensorFlow (AI)</span>
-                            <span class="tech-pill">Godot Engine</span>
-                            <span class="tech-pill">Three.js</span>
-                            <span class="tech-pill">Flask</span>
-                            <span class="tech-pill">Arduino/IoT</span>
+                        <div>
+                            <h4 style="font-size: 0.85rem; color:white; margin-bottom:10px; font-weight:600; opacity:0.9;">SPECIALIZED TECH</h4>
+                            <div class="tech-stack">
+                                <span class="tech-pill">TensorFlow (AI)</span>
+                                <span class="tech-pill">Godot Engine</span>
+                                <span class="tech-pill">Three.js</span>
+                                <span class="tech-pill">Flask</span>
+                                <span class="tech-pill">Arduino/IoT</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -315,27 +394,39 @@
         </div>
     </section>
 
+    <!-- PHOTO 3: Experience Photo -->
     <section id="experience" data-shape-index="2">
         <h2 class="section-title reveal">02. CAREER</h2>
-        <div class="glass-card reveal" style="max-width: 900px; width: 100%;">
-            <div class="timeline-item">
-                <span class="timeline-date">JUNE 2024 - SEP 2024</span>
-                <div class="timeline-role">Manager & Web Trainer</div>
-                <div class="timeline-company">Fiber Iraq Academy</div>
-                <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
-                    • Delivered structured Full Stack Development training curricula.<br>
-                    • Developed interactive Android & Windows display applications.<br>
-                    • Programmed KNX smart automation devices and managed international supplier communications.
-                </p>
+        <div class="grid-2">
+            <!-- Left Column: Timeline -->
+            <div class="glass-card reveal">
+                <div class="timeline-item">
+                    <span class="timeline-date">JUNE 2024 - SEP 2024</span>
+                    <div class="timeline-role">Manager & Web Trainer</div>
+                    <div class="timeline-company">Fiber Iraq Academy</div>
+                    <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                        • Delivered structured Full Stack Development training curricula.<br>
+                        • Developed interactive Android & Windows display applications.<br>
+                        • Programmed KNX smart automation devices and managed international supplier communications.
+                    </p>
+                </div>
+                <div class="timeline-item" style="border-left-color: rgba(255,255,255,0.05); margin-bottom: 0;">
+                    <span class="timeline-date">2020 - 2024</span>
+                    <div class="timeline-role">Communication Engineering Student</div>
+                    <div class="timeline-company">UOITC University</div>
+                    <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                        • Graduated with a Bachelor of Media Technology & Communication Engineering.<br>
+                        • Developed "Conference System" (Top Graduation Project).
+                    </p>
+                </div>
             </div>
-            <div class="timeline-item" style="border-left-color: rgba(255,255,255,0.05); margin-bottom: 0;">
-                <span class="timeline-date">2020 - 2024</span>
-                <div class="timeline-role">Communication Engineering Student</div>
-                <div class="timeline-company">UOITC University</div>
-                <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
-                    • Graduated with a Bachelor of Media Technology & Communication Engineering.<br>
-                    • Developed "Conference System" (Top Graduation Project).
-                </p>
+
+            <!-- Right Column: Photo -->
+            <div class="reveal">
+                <div class="photo-card">
+                    <!-- Replace src with photo of you teaching or working -->
+                    <img src="photo_2026-01-22_21-48-37.jpg" alt="Mustafa Teaching">
+                </div>
             </div>
         </div>
     </section>
@@ -394,7 +485,7 @@
                 <a href="https://www.linkedin.com/in/mmk-viperiq" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://www.instagram.com/mm_k43" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
             </div>
-            <div style="margin-top: 50px; border-radius:12px; overflow:hidden; border: 1px solid var(--border); opacity: 0.8; invert(0.9);">
+            <div style="margin-top: 50px; border-radius:12px; overflow:hidden; border: 1px solid var(--border); opacity: 0.8; filter: grayscale(1) invert(0.9);">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d213393.7176972021!2d44.19109522306571!3d33.311577260554316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15577f67a0a74193%3A0x9deda9d2a3b16f2c!2sBaghdad%2C%20Baghdad%20Governorate!5e0!3m2!1sen!2siq!4v1730234373485!5m2!1sen!2siq" 
                 width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
@@ -402,7 +493,7 @@
     </section>
 
     <footer style="text-align: center; padding: 40px; font-size: 0.85rem; color: #666; font-weight: 500;">
-        MUSTAFA MAHMOUD KAREEM &copy;
+        MUSTAFA MAHMOUD KAREEM &copy; 2026
     </footer>
 
     <script type="module">
@@ -442,10 +533,9 @@
                 });
             }).catch(e => console.log('Git fetch failed', e));
 
-        // --- 3D Particle Logic ---
+        // --- 3D Particle Logic (Identical to previous, keeping for function) ---
         const CONFIG = {
-            particleSize: 0.20, // Reduced from 0.35 to 0.20 for finer look
-            color1: new THREE.Color(0x00f3ff), color2: new THREE.Color(0x2563eb),
+            particleSize: 0.35, color1: new THREE.Color(0x00f3ff), color2: new THREE.Color(0x2563eb),
             repelRadius: 40, repelStrength: 50, returnSpeed: 0.08, morphSpeed: 0.04
         };
         const scene = new THREE.Scene();
@@ -517,10 +607,7 @@
             geo.setAttribute('aRandom', new THREE.BufferAttribute(rand, 1));
 
             particles = new THREE.Points(geo, new THREE.PointsMaterial({ size: CONFIG.particleSize, vertexColors: true, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending }));
-            
-            // Scaled down to 0.85 on desktop to keep shape size reasonable
-            const s = window.innerWidth < 768 ? 0.35 : 0.85; 
-            particles.scale.set(s,s,s);
+            const s = window.innerWidth < 768 ? 0.35 : 1.0; particles.scale.set(s,s,s);
             scene.add(particles);
 
             setTimeout(() => { loader.style.opacity = '0'; document.getElementById('canvas-container').style.opacity = '1'; setTimeout(() => loader.remove(), 800); }, 500);
@@ -530,13 +617,7 @@
 
         window.addEventListener('mousemove', (e) => { mouse.x = (e.clientX / window.innerWidth) * 2 - 1; mouse.y = -(e.clientY / window.innerHeight) * 2 + 1; });
         window.addEventListener('touchmove', (e) => { if(e.touches.length > 0) { mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1; mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1; } }, {passive: true});
-        window.addEventListener('resize', () => { 
-            camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); 
-            if(particles) { 
-                const s = window.innerWidth < 768 ? 0.35 : 0.85; 
-                particles.scale.set(s,s,s); 
-            } 
-        });
+        window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); if(particles) { const s = window.innerWidth < 768 ? 0.35 : 1.0; particles.scale.set(s,s,s); } });
 
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
